@@ -4,6 +4,8 @@ G = 6.67408*(10**-11)
 
 def get_acceleration_to_target(particle: Particle, target_particle: Particle):
     distance = particle.distance_to_particle(target_particle)
+    # if distance < 1: # distances between 0 and 1 will have the wrong effect
+    #     distance = 1
     acceleration = (G*target_particle.mass)/distance**2
     return acceleration
 

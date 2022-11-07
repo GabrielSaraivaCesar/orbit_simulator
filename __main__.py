@@ -5,7 +5,7 @@ import src.physics as physics
 import src.presets as presets
 import settings
 
-particles = presets.CHAOS_2
+particles = presets.CHAOS
 
 x_pathes = [[] for p in particles]
 y_pathes = [[] for p in particles]
