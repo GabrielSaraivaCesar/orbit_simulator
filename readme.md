@@ -64,7 +64,7 @@ This is an aproximate value of $G$ based on the paper "[Precise Ideal Value of t
 $G= 6.67401 \times 10^{−11} m^3 kg^{−1} s^{−2}$<br><br>
 
 ### Distance between planets
-We are dealing with a 2D matrix, and planets have $x$ and $y$ coordinates. This formula gets the distance between each axis of 2 planets, interprets it as a right triangle, and then returns the hypotenuse being the distance in meters.
+We are dealing with a 2D matrix, and planets have $x$ and $y$ coordinates. This formula gets the distance between each axis of 2 planets by interpreting it as a right triangle, and then returning the hypotenuse being the distance in meters.
 
 $\sqrt{|x_1-x_2|^{2}+|y_1-y_2|^{2}}$<br><br>
 
