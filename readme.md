@@ -18,12 +18,12 @@ This project aims to simulate how orbital mechanics work
   </tr>
   
 </table><br><br>
-<table cellspacing="0" cellpadding="0" align="center">
+<table cellspacing="0" cellpadding="0">
   <tr>
     <td ><img src="./readme_files/3d.gif" alt="Simple orbit" /></td>
   </tr>
   <tr>
-    <td>Simple orbit</td>
+    <td>3D animation of 3 planets in orbit</td>
   </tr>
 </table><br><br>
 
