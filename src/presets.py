@@ -45,7 +45,7 @@ def get_preset_by_name(name:str):
 def is_preset_3d(preset):
     is_3d = False
     for planet in preset:
-        if planet.z:
+        if planet.z is not None:
             is_3d = True
             break
     return is_3d

@@ -17,6 +17,7 @@ arg_parser.add_argument('-d', '--direction', action='store_true', help="Allow di
 arg_parser.add_argument('-tw', '--time-warp', default=1, type=float, help="Sets time warp")
 arg_parser.add_argument('-ei', '--extra-iterations', default=10, type=float, help="Extra interaction per loop. Increases precision. Decreases performance")
 arg_parser.add_argument('-fps', '--fps', default=30, type=float, help="Sets the frame rate. Decreases performance")
+arg_parser.add_argument('-3d', '--3d', action='store_true', help="Force 3d rendering", dest="force_3d")
 
 
 preset = "SIMPLE_ORBIT"
@@ -39,6 +40,9 @@ ax = None
 renderer = None
 angle_3d = 0
 
+def is_3d_projection():
+    return projection == '3d'
+
 def iterate(delta_seconds, draw):
     
     for idx, planet in enumerate(planets):
@@ -55,19 +59,27 @@ def iterate(delta_seconds, draw):
             acceleration = physics.get_acceleration_to_target(planet, other_planet)
             x_size = abs(planet.x - other_planet.x)
             y_size = abs(planet.y - other_planet.y)
-            z_size = abs(planet.z - other_planet.z)
+            z_size = 0
+            if projection == '3d':
+                z_size = abs(planet.z - other_planet.z)
             x_acceleration_rate = (x_size/(x_size+y_size+z_size))
             y_acceleration_rate = (y_size/(x_size+y_size+z_size))
-            z_acceleration_rate = (z_size/(x_size+y_size+z_size))
+            
+
             delta_vx = acceleration * x_acceleration_rate * delta_seconds
             delta_vy = acceleration * y_acceleration_rate * delta_seconds
-            delta_vz = acceleration * z_acceleration_rate * delta_seconds
             if other_planet.y <  planet.y:
                 delta_vy = -delta_vy
             if other_planet.x <  planet.x:
                 delta_vx = -delta_vx
-            if other_planet.z <  planet.z:
-                delta_vz = -delta_vz
+
+            
+            if projection == '3d':
+                z_acceleration_rate = (z_size/(x_size+y_size+z_size))
+                delta_vz = acceleration * z_acceleration_rate * delta_seconds
+                if other_planet.z <  planet.z:
+                    delta_vz = -delta_vz
+                planet.v_z += delta_vz
                 
             # if settings.DRAW_DIRECTION_LINE:
             #     if draw:
@@ -75,7 +87,6 @@ def iterate(delta_seconds, draw):
             
             planet.v_y += delta_vy
             planet.v_x += delta_vx
-            planet.v_z += delta_vz
         
         if settings.DRAW_PATHES and draw:
             x_pathes[idx].append(planet.x)
@@ -138,7 +149,7 @@ def draw_frame():
             elif planet.z < min_z:
                 min_z = planet.z
         
-    if projection == "3d":
+    if is_3d_projection():
         ax.scatter(max_x, max_y, max_z, color="#00000000")
         ax.scatter(min_x, min_y, min_z, color="#00000000")
     else:
@@ -187,13 +198,13 @@ if __name__ == '__main__':
     preset = args.preset
     planets = presets.get_preset_by_name(preset)
 
-    if presets.is_preset_3d(planets):
+    if presets.is_preset_3d(planets) or args.force_3d:
         projection = "3d"
         presets.normalize_3d_preset(planets)
         
     fig = plt.figure()
     fig.canvas.draw()
-    if projection == "3d":
+    if is_3d_projection():
         ax = fig.add_subplot(projection=projection)
     else:
         ax = fig.add_subplot()

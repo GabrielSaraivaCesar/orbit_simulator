@@ -25,12 +25,19 @@ class Planet:
         self.color = color
         
     def distance_to_planet(self, planet):
+        z = 0
+        planet_z = 0
+        if self.z is not None:
+            z = self.z
+        if planet.z is not None:
+            planet_z = planet.z
 
-        return math.sqrt(abs(self.x - planet.x)**2 + abs(self.y - planet.y)**2 + abs(self.z - planet.z)**2)
+        return math.sqrt(abs(self.x - planet.x)**2 + abs(self.y - planet.y)**2 + abs(z - planet_z)**2)
     
     def move_planet(self, delta_t):
         self.x += self.v_x*delta_t
         self.y += self.v_y*delta_t
-        self.z += self.v_z*delta_t
+        if self.z is not None and self.v_z is not None:
+            self.z += self.v_z*delta_t
         
         

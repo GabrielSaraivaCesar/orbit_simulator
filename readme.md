@@ -27,22 +27,11 @@ This project aims to simulate how orbital mechanics work
   </tr>
 </table><br><br>
 
-## Features
-You can configure a set of things in the settings.py file like:
-|Config name|Description|Value type|
-|-----------|-----------|----------|
-|DRAW_PATHES|Shows the previous path of each planet|Boolean|
-|DRAW_DIRECTION_LINE|Shows lines of directional moment of inertia and gravitational influences|Boolean|
-|TIME_WARP|Changes the speed of the simulation in relation with real life time. This will not affect the render rate|Float|
-|ITERATIONS_PER_TICK|Sets how many iterations you want for each loop. Useful to increase precision in high TIME_WARPs|Float|
-|FPS|Sets the maximum frame rate of the animation. Lower FPSs will increase performance|Float|
-### Execution
+## Execution
 ```
 usage: orbit_simulator [-h] [-mp PATH_SIZE] [-p] [-d] [-tw TIME_WARP]
-                       [-ei EXTRA_ITERATIONS] [-fps FPS]
+                       [-ei EXTRA_ITERATIONS] [-fps FPS] [-3d]
                        preset
-
-This project aims to simulate how orbital mechanics works
 
 positional arguments:
   preset                Simulation preset name
@@ -59,6 +48,12 @@ options:
                         Extra interaction per loop. Increases precision.
                         Decreases performance
   -fps FPS, --fps FPS   Sets the frame rate. Decreases performance
+  -3d, --3d             Force 3d rendering
+```
+### Execution Command Example
+Run preset ```SYNCHRONOUS_ORBITS``` at 3x time warp, 60 FPS, and force 3d rendering
+```
+python3 orbit_simulator synchronous_orbits -tw 3 -fps 60 -3d
 ```
 
 ## Measurement Units
