@@ -4,8 +4,10 @@ import time
 import src.physics as physics
 import src.presets as presets
 import settings
+import threading
+import math
 
-preset = "SIMPLE_ORBIT_2"
+preset = "SYNCHRONOUS_ORBITS"
 planets = presets.get_preset_by_name(preset)
 
 x_pathes = [[] for p in planets]
@@ -66,7 +68,10 @@ def draw_frame():
     plt.clf()
     for idx, planet in enumerate(planets):
         color_idx = idx/(len(planets)-1)
-        plt.scatter(planet.x, planet.y, s=planet.size, color=plt.cm.Dark2(color_idx))
+        color = plt.cm.Dark2(color_idx)
+        if planet.color:
+            color = planet.color
+        plt.scatter(planet.x, planet.y, s=planet.size, color=color)
         if planet.is_fixed:
             continue
 
@@ -74,9 +79,9 @@ def draw_frame():
         if settings.DRAW_PATHES:
             x_pathes[idx] = x_pathes[idx][-settings.MAX_PATH_SIZE:]
             y_pathes[idx] = y_pathes[idx][-settings.MAX_PATH_SIZE:]
-            plt.plot(x_pathes[idx], y_pathes[idx], alpha=0.3, color=plt.cm.Dark2(color_idx))
+            plt.plot(x_pathes[idx], y_pathes[idx], alpha=0.3, color=color)
         if settings.DRAW_DIRECTION_LINE:
-            plt.arrow(planet.x, planet.y, planet.v_x*settings.DRAW_TIME_IN_FUTURE_LINE, planet.v_y*settings.DRAW_TIME_IN_FUTURE_LINE, color=plt.cm.Dark2(color_idx), width=0.005)
+            plt.arrow(planet.x, planet.y, planet.v_x*settings.DRAW_TIME_IN_FUTURE_LINE, planet.v_y*settings.DRAW_TIME_IN_FUTURE_LINE, color=color, width=0.005)
 
         if planet.x > max_x:
             max_x = planet.x
@@ -87,7 +92,7 @@ def draw_frame():
             max_y = planet.y
         elif planet.y < min_y:
             min_y = planet.y
-            
+    
     plt.scatter(max_x, max_y, color="#00000000")
     plt.scatter(min_x, min_y, color="#00000000")
     plt.axis('equal')
@@ -96,15 +101,24 @@ def draw_frame():
 def main():
     plt.ion()
     plt.show()
+    iteration_t = time.time()
+    drawing_t = time.time()
     while True:
-        for i in range(settings.TIME_WARP):
-            if len(settings.GRAPH_X_LIMITS) == 2:
-                plt.xlim(settings.GRAPH_X_LIMITS)
-            if len(settings.GRAPH_Y_LIMITS) == 2:
-                plt.ylim(settings.GRAPH_Y_LIMITS)
+        iteration_delta_t = time.time() - iteration_t
+        iteration_t = time.time()
+        time_to_draw = False
 
-            iterate(settings.ANIMATION_FIXED_DELTA_TIME*(i/settings.TIME_WARP), i == settings.TIME_WARP-1)
-        draw_frame()
+        if drawing_t >= 1/settings.FPS:
+            time_to_draw = True
+            drawing_t = time.time()
+
+        iterations_number = math.ceil(math.ceil(settings.TIME_WARP) * settings.ITERATIONS_PER_TICK)
+        for i in range(iterations_number):
+            progress = (i+1)/iterations_number
+            iterate((iteration_delta_t  * settings.TIME_WARP)/iterations_number, time_to_draw and progress == 1)
+
+        if time_to_draw:
+            draw_frame()
         plt.title("{0} -> {1}x".format(preset, settings.TIME_WARP))
         plt.pause(0.000000001)
         

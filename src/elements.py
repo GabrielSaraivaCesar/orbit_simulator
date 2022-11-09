@@ -8,8 +8,9 @@ class Planet:
     v_y:float = 0
     v_x:float = 0
     is_fixed:bool=False
+    color:str=None
     
-    def __init__(self, x: int, y: int, mass: float, size: float=0, v_x=0, v_y=0, is_fixed=False) -> None:
+    def __init__(self, x: int, y: int, mass: float, size: float=0, v_x=0, v_y=0, is_fixed=False, color=None) -> None:
         self.x = x
         self.y = y
         self.mass = mass
@@ -17,6 +18,7 @@ class Planet:
         self.v_x = v_x
         self.v_y = v_y
         self.is_fixed = is_fixed
+        self.color = color
         
     def distance_to_planet(self, planet):
         return math.sqrt(abs(self.x - planet.x)**2 + abs(self.y - planet.y)**2)
