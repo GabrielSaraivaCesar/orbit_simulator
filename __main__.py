@@ -1,17 +1,28 @@
 from matplotlib import pyplot as plt
-from src.elements import Planet
 import time
 import src.physics as physics
 import src.presets as presets
 import settings
-import threading
 import math
+import argparse
 
-preset = "SYNCHRONOUS_ORBITS"
-planets = presets.get_preset_by_name(preset)
+arg_parser = argparse.ArgumentParser(
+                    prog = 'Orbit Simulator',
+                    description = 'This project aims to simulate how orbital mechanics works'
+                    )
+arg_parser.add_argument('preset', help="Simulation preset name", type=str)   
+arg_parser.add_argument('-mp', '--path-size', default=10000, type=int, help="Maximum amount of path coordinates")
+arg_parser.add_argument('-p', '--no-pathes', action='store_true', help="Disable path drawing")
+arg_parser.add_argument('-d', '--direction', action='store_true', help="Allow direction drawing")
+arg_parser.add_argument('-tw', '--time-warp', default=1, type=float, help="Sets time warp")
+arg_parser.add_argument('-ei', '--extra-iterations', default=10, type=float, help="Extra interaction per loop. Increases precision. Decreases performance")
+arg_parser.add_argument('-fps', '--fps', default=30, type=float, help="Sets the frame rate. Decreases performance")
 
-x_pathes = [[] for p in planets]
-y_pathes = [[] for p in planets]
+preset = "SIMPLE_ORBIT"
+planets = []
+
+x_pathes = []
+y_pathes = []
 
 max_x = 0
 min_x = 0
@@ -46,7 +57,7 @@ def iterate(delta_seconds, draw):
                 
             if settings.DRAW_DIRECTION_LINE:
                 if draw:
-                    plt.arrow(planet.x, planet.y, delta_vx*settings.DRAW_TIME_IN_FUTURE_LINE, delta_vy*settings.DRAW_TIME_IN_FUTURE_LINE, color=plt.cm.Dark2(other_planet_color_idx), width=0.002)
+                    plt.arrow(planet.x, planet.y, delta_vx*settings.DRAW_TIME_IN_FUTURE_LINE*20, delta_vy*settings.DRAW_TIME_IN_FUTURE_LINE*20, color=plt.cm.Dark2(other_planet_color_idx), width=0.002)
             
             planet.v_y += delta_vy
             planet.v_x += delta_vx
@@ -65,7 +76,6 @@ def draw_frame():
     global min_x, max_x, min_y, max_y
     global x_pathes, y_pathes
 
-    plt.clf()
     for idx, planet in enumerate(planets):
         color_idx = idx/(len(planets)-1)
         color = plt.cm.Dark2(color_idx)
@@ -108,6 +118,7 @@ def main():
         iteration_t = time.time()
         time_to_draw = False
 
+        plt.clf()
         if drawing_t >= 1/settings.FPS:
             time_to_draw = True
             drawing_t = time.time()
@@ -124,4 +135,14 @@ def main():
         
 
 if __name__ == '__main__':
+    args = arg_parser.parse_args()
+    settings.DRAW_DIRECTION_LINE = args.direction
+    settings.DRAW_PATHES = not args.no_pathes 
+    settings.FPS = args.fps
+    settings.TIME_WARP = args.time_warp
+    settings.ITERATIONS_PER_TICK = args.extra_iterations
+    preset = args.preset
+    planets = presets.get_preset_by_name(preset)
+    x_pathes = [[] for p in planets]
+    y_pathes = [[] for p in planets]
     main()

@@ -32,5 +32,5 @@ presets_object = {
 }
 
 
-def get_preset_by_name(name):
-    return presets_object[name]
+def get_preset_by_name(name:str):
+    return presets_object[name.upper()]

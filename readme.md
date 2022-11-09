@@ -18,6 +18,40 @@ This project aims to simulate how orbital mechanics works
   </tr>
 </table>
 
+## Features
+You can configure a set of things in the settings.py file like:
+|Config name|Description|Value type|
+|-----------|-----------|----------|
+|DRAW_PATHES|Shows the previous path of each planet|Boolean|
+|DRAW_DIRECTION_LINE|Shows lines of directional moment of inertia and gravitational influences|Boolean|
+|TIME_WARP|Changes the speed of the simulation in relation with real life time. This will not affect the render rate|Float $0$...$\infty$|
+|ITERATIONS_PER_TICK|Sets how many iterations you want for each loop. Useful to increase precision in high TIME_WARPs|Float $0$...$\infty$|
+|FPS|Sets the maximum frame rate of the animation. Lower FPSs will increase performance|Float $0$...$\infty$|
+### Execution
+```
+usage: Orbit Simulator [-h] [-mp PATH_SIZE] [-p] [-d] [-tw TIME_WARP]
+                       [-ei EXTRA_ITERATIONS] [-fps FPS]
+                       preset
+
+This project aims to simulate how orbital mechanics works
+
+positional arguments:
+  preset                Simulation preset name
+
+options:
+  -h, --help            show this help message and exit
+  -mp PATH_SIZE, --path-size PATH_SIZE
+                        Maximum amount of path coordinates
+  -p, --no-pathes       Disable path drawing
+  -d, --direction       Allow direction drawing
+  -tw TIME_WARP, --time-warp TIME_WARP
+                        Sets time warp
+  -ei EXTRA_ITERATIONS, --extra-iterations EXTRA_ITERATIONS
+                        Extra interaction per loop. Increases precision.
+                        Decreases performance
+  -fps FPS, --fps FPS   Sets the frame rate. Decreases performance
+```
+
 ## Measurement Units
 Planet mass: $kg$<br>
 Distance: $m$<br>
