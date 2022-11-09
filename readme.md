@@ -31,10 +31,11 @@ This project aims to simulate how orbital mechanics work
 ```
 usage: orbit_simulator [-h] [-mp PATH_SIZE] [-p] [-d] [-tw TIME_WARP]
                        [-ei EXTRA_ITERATIONS] [-fps FPS] [-3d]
-                       preset
+                       {SIMPLE_ORBIT,SIMPLE_ORBIT_2,SIMPLE_ORBIT_3,HIGH_INFLUENCES,SYNCHRONOUS_ORBITS,SOLAR_SYSTEM}
 
 positional arguments:
-  preset                Simulation preset name
+  {SIMPLE_ORBIT,SIMPLE_ORBIT_2,SIMPLE_ORBIT_3,HIGH_INFLUENCES,SYNCHRONOUS_ORBITS,SOLAR_SYSTEM}
+                        Simulation preset name
 
 options:
   -h, --help            show this help message and exit
@@ -49,6 +50,7 @@ options:
                         Decreases performance
   -fps FPS, --fps FPS   Sets the frame rate. Decreases performance
   -3d, --3d             Force 3d rendering
+
 ```
 ### Execution Command Example
 Run preset ```SYNCHRONOUS_ORBITS``` at 3x time warp, 60 FPS, and force 3d rendering
@@ -83,7 +85,7 @@ $r$ = Distance between the planets<br><br>
 $g = {{G*M} \over r^{2}} $<br><br>
 
 ### Speed distribution between axes
-To calculate the distribution of speed between $x$ and $y$ , you need to calculate how close $x_1$ is from $x_2$ in relation to ($y_1$, $y_2$) and ($z_1$, $z_2$). This calculus will result in a value between $0$ and $1$, it is the proportion of the acceleration of each axis. After that, multiply this value by the acceleration of gravity ($g$) and ($\Delta{t}$).<br>
+To calculate the distribution of speed between $x$ and $y$ , you need to calculate how close $x_1$ is from $x_2$ in relation to $(y_1, y_2)$ and $(z_1, z_2)$. This calculus will result in a value between $0$ and $1$, it is the proportion of the acceleration of each axis. After that, multiply this value by the acceleration of gravity $(g)$ and $(\Delta{t})$.<br>
 $g$ = Acceleration of gravity<br>
 $\Delta{t}$ = Variation of time<br><br>
 $\Delta{x} = g \times { |x_1 - x_2|\over{|x_1 - x_2|+|y_1 - y_2|+|z_1 - z_2|} } \times \Delta{t}$ <br><br>

@@ -10,7 +10,7 @@ arg_parser = argparse.ArgumentParser(
                     prog = 'orbit_simulator',
                     description = 'This project aims to simulate how orbital mechanics works'
                     )
-arg_parser.add_argument('preset', help="Simulation preset name", type=str)   
+arg_parser.add_argument('preset', help="Simulation preset name", type=str, choices=presets.presets_object.keys())   
 arg_parser.add_argument('-mp', '--path-size', default=10000, type=int, help="Maximum amount of path coordinates")
 arg_parser.add_argument('-p', '--no-pathes', action='store_true', help="Disable path drawing")
 arg_parser.add_argument('-d', '--direction', action='store_true', help="Allow direction drawing")
