@@ -1,6 +1,6 @@
 
 # Orbit Simulator
-This project aims to simulate how orbital mechanics works
+This project aims to simulate how orbital mechanics work
 
 ## Examples
 <table cellspacing="0" cellpadding="0">
@@ -75,7 +75,7 @@ $r$ = Distance between the planets<br><br>
 $g = {{G*M} \over r^{2}} $<br><br>
 
 ### Speed distribution between axis
-To calculate the distribution of speed between $x$ and $y$, we need to calculate how close $x$ is from the other planet $x$ in comparison to $y$. This calculation will give us a value between $0$ and $1$, which is the proportion of the acceleration each axis should get. After that, we just need to multiply by the acceleration and $\Delta{t}$<br>
+To calculate the distribution of speed between $x$ and $y$, we need to calculate how close $x$ is from the other planet $x$ in comparison to $y$. This calculation will give us a value between $0$ and $1$, which is the proportion of the acceleration each axis should get. After that, we just need to multiply it by the acceleration and $\Delta{t}$<br>
 $g$ = Acceleration of gravity<br>
 $\Delta{t}$ = Variation of time<br><br>
 $\Delta{x} = g \times { |x_1 - x_2|\over{|x_1 - x_2|+|y_1 - y_2|} } \times \Delta{t}$ <br>
