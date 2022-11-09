@@ -16,7 +16,16 @@ This project aims to simulate how orbital mechanics work
     <td>Orbit with 2 massive objects too close</td>
     <td>Synchronous orbit of 4 planets with different apogee locations</td>
   </tr>
-</table>
+  
+</table><br><br>
+<table cellspacing="0" cellpadding="0" align="center">
+  <tr>
+    <td ><img src="./readme_files/3d.gif" alt="Simple orbit" /></td>
+  </tr>
+  <tr>
+    <td>Simple orbit</td>
+  </tr>
+</table><br><br>
 
 ## Features
 You can configure a set of things in the settings.py file like:
@@ -60,24 +69,29 @@ Speed & Velocity: $m/s$<br><br>
 ## Assumptions and Formulas
 
 ### Gravitational Constant
-This is an aproximate value of $G$ based on the paper "[Precise Ideal Value of the Universal Gravitational Constant G](https://www.scirp.org/journal/paperinformation.aspx?paperid=74770)". Writen by Abed El Karim S. Abou Layla, 2017:<br>
+This is an aproximate value of $G$ based on the article "[Precise Ideal Value of the Universal Gravitational Constant G](https://www.scirp.org/journal/paperinformation.aspx?paperid=74770)". By Abed El Karim S. Abou Layla, 2017:<br>
 $G= 6.67401 \times 10^{−11} m^3 kg^{−1} s^{−2}$<br><br>
 
 ### Distance between planets
-We are dealing with a 2D matrix, and planets have $x$ and $y$ coordinates. This formula gets the distance between each axis of 2 planets by interpreting it as a right triangle, and then returning the hypotenuse being the distance in meters.
+In a 2d matrix, planets have $x$ and $y$ coordinates. The formula obtains the distance between the axes of the 2 planets by interpreting it as a right triangle, resulting in the value of the hypotenuse, in meters.
 
-$\sqrt{|x_1-x_2|^{2}+|y_1-y_2|^{2}}$<br><br>
+$\sqrt{|x_1-x_2|^{2}+|y_1-y_2|^{2}}$<br>
 
-### Acceleration of Gravity
+And for a 3d matrix, you simply need to add the $z$ axis to the formula
+
+$\sqrt{|x_1-x_2|^{2}+|y_1-y_2|^{2}+|z_1-z_2|^{2}}$<br><br>
+
+### Gravitational Acceleration
 $G$ = Gravitational Constant<br>
-$M$ = Target planet mass<br>
+$M$ = Mass of the target planet<br>
 $r$ = Distance between the planets<br><br>
 $g = {{G*M} \over r^{2}} $<br><br>
 
-### Speed distribution between axis
-To calculate the distribution of speed between $x$ and $y$, we need to calculate how close $x$ is from the other planet $x$ in comparison to $y$. This calculation will give us a value between $0$ and $1$, which is the proportion of the acceleration each axis should get. After that, we just need to multiply it by the acceleration and $\Delta{t}$<br>
+### Speed distribution between axes
+To calculate the distribution of speed between $x$ and $y$ , you need to calculate how close $x_1$ is from $x_2$ in relation to ($y_1$, $y_2$) and ($z_1$, $z_2$). This calculus will result in a value between $0$ and $1$, it is the proportion of the acceleration of each axis. After that, multiply this value by the acceleration of gravity ($g$) and ($\Delta{t}$).<br>
 $g$ = Acceleration of gravity<br>
 $\Delta{t}$ = Variation of time<br><br>
-$\Delta{x} = g \times { |x_1 - x_2|\over{|x_1 - x_2|+|y_1 - y_2|} } \times \Delta{t}$ <br>
-$\Delta{y} = g \times { |y_1 - y_2|\over{|x_1 - x_2|+|y_1 - y_2|} } \times \Delta{t}$ 
+$\Delta{x} = g \times { |x_1 - x_2|\over{|x_1 - x_2|+|y_1 - y_2|+|z_1 - z_2|} } \times \Delta{t}$ <br><br>
+$\Delta{y} = g \times { |y_1 - y_2|\over{|x_1 - x_2|+|y_1 - y_2|+|z_1 - z_2|} } \times \Delta{t}$ <br><br>
+$\Delta{z} = g \times { |z_1 - z_2|\over{|x_1 - x_2|+|y_1 - y_2|+|z_1 - z_2|} } \times \Delta{t}$ <br>
 

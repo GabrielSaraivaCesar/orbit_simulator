@@ -10,6 +10,12 @@ presets_object = {
         Planet(x=0, y=405400, mass=0, size=50, v_x=20000),
         Planet(x=0, y=0, mass=5.972*10**24, size=500, is_fixed=True),
     ],
+    "SIMPLE_ORBIT_3": [
+        Planet(x=0, y=200000, mass=0, size=50, v_x=20000),
+        Planet(x=0, y=405400, mass=0, size=50, v_x=20000, z=200000),
+        Planet(x=0, y=0, mass=0, size=50, v_x=20000, z=405400),
+        Planet(x=0, y=0, mass=5.972*10**24, size=500, is_fixed=True),
+    ],
 
     "HIGH_INFLUENCES": [
         Planet(x=100, y=400, mass=10*10**15, size=50, v_x=100),
@@ -34,3 +40,19 @@ presets_object = {
 
 def get_preset_by_name(name:str):
     return presets_object[name.upper()]
+
+
+def is_preset_3d(preset):
+    is_3d = False
+    for planet in preset:
+        if planet.z:
+            is_3d = True
+            break
+    return is_3d
+
+def normalize_3d_preset(preset):
+    for planet in preset:
+        if planet.z is None:
+            planet.z = 0
+        if planet.v_z is None:
+            planet.v_z = 0

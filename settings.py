@@ -12,4 +12,7 @@ TIME_WARP=1
 ITERATIONS_PER_TICK=10
 
 # Defines a maximum frame rate per second. Simulation will not be affected by this value, only rendering
-FPS = 15
+FPS = 30
+
+
+ROTATION_3D_RATE = 3
