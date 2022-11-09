@@ -80,3 +80,4 @@ $g$ = Acceleration of gravity<br>
 $\Delta{t}$ = Variation of time<br><br>
 $\Delta{x} = g \times { |x_1 - x_2|\over{|x_1 - x_2|+|y_1 - y_2|} } \times \Delta{t}$ <br>
 $\Delta{y} = g \times { |y_1 - y_2|\over{|x_1 - x_2|+|y_1 - y_2|} } \times \Delta{t}$ 
+
