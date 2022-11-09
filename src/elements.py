@@ -1,6 +1,6 @@
 import math
 
-class Particle:
+class Planet:
     x:int = 0
     y:int = 0
     mass:float = 0.0
@@ -18,12 +18,10 @@ class Particle:
         self.v_y = v_y
         self.is_fixed = is_fixed
         
-    def distance_to_particle(self, particle):
-        # The hypotenuse will have a base value of 1 because gravity acceleration calculation with r < 1 will result in wrong results
-        base_value = 0
-        return math.sqrt(abs(self.x - particle.x)**2 + abs(self.y - particle.y)**2) + base_value
+    def distance_to_planet(self, planet):
+        return math.sqrt(abs(self.x - planet.x)**2 + abs(self.y - planet.y)**2)
     
-    def move_particle(self, delta_t):
+    def move_planet(self, delta_t):
         self.x += self.v_x*delta_t
         self.y += self.v_y*delta_t
         

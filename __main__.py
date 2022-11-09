@@ -1,99 +1,112 @@
 from matplotlib import pyplot as plt
-from src.elements import Particle
+from src.elements import Planet
 import time
 import src.physics as physics
 import src.presets as presets
 import settings
 
-particles = presets.CHAOS
+preset = "SIMPLE_ORBIT_2"
+planets = presets.get_preset_by_name(preset)
 
-x_pathes = [[] for p in particles]
-y_pathes = [[] for p in particles]
+x_pathes = [[] for p in planets]
+y_pathes = [[] for p in planets]
 
+max_x = 0
+min_x = 0
+max_y = 0
+min_y = 0
 
-def iterate(lastFrameTime):
-    current_time = time.time()
-    delta_seconds = current_time - lastFrameTime
-    if settings.ANIMATION_FIXED_DELTA_TIME is not None:
-        delta_seconds = settings.ANIMATION_FIXED_DELTA_TIME
+def iterate(delta_seconds, draw):
     
-    for idx, particle in enumerate(particles):
-        color_idx = idx/(len(particles)-1)
+    for idx, planet in enumerate(planets):
 
-        if particle.is_fixed:
-            plt.scatter(particle.x, particle.y, s=particle.size, color=plt.cm.Dark2(color_idx))
+        if planet.is_fixed:
             continue
         
-        # mean_x_target = 0
-        # mean_y_target = 0
-        # weight_sum = 0
-        for other_particle_idx, other_particle in enumerate(particles):
-            other_particle_color_idx = other_particle_idx/(len(particles)-1)
-            if other_particle == particle:
+        for other_planet_idx, other_planet in enumerate(planets):
+            other_planet_color_idx = other_planet_idx/(len(planets)-1)
+            if other_planet == planet:
                 continue
             
-            # weight_sum += other_particle.mass
-            # mean_x_target += other_particle.mass*other_particle.x
-            # mean_y_target += other_particle.mass*other_particle.y
-                
-            # mean_mass = weight_sum / (len(particles) - 1)
-            # mean_x_target /= weight_sum
-            # mean_y_target /= weight_sum
-            
-            
-            # pseudo_particle = Particle(x=mean_x_target, y=mean_y_target, mass=mean_mass, size=0)
-            # TODO - check if pseudo_particle with mean positions makes sense
-            acceleration = physics.get_acceleration_to_target(particle, other_particle)
-            x_size = abs(particle.x - other_particle.x)
-            y_size = abs(particle.y - other_particle.y)
+            # Get gravity acceleration related to the planet
+            acceleration = physics.get_acceleration_to_target(planet, other_planet)
+            x_size = abs(planet.x - other_planet.x)
+            y_size = abs(planet.y - other_planet.y)
             x_acceleration_rate = (x_size/(x_size+y_size))
             y_acceleration_rate = (y_size/(x_size+y_size))
             delta_vx = acceleration * x_acceleration_rate * delta_seconds
             delta_vy = acceleration * y_acceleration_rate * delta_seconds
             
-            if other_particle.y <  particle.y:
+            if other_planet.y <  planet.y:
                 delta_vy = -delta_vy
-            if other_particle.x <  particle.x:
+            if other_planet.x <  planet.x:
                 delta_vx = -delta_vx
                 
             if settings.DRAW_DIRECTION_LINE:
-                plt.arrow(particle.x, particle.y, delta_vx*settings.DRAW_TIME_IN_FUTURE_LINE, delta_vy*settings.DRAW_TIME_IN_FUTURE_LINE, color=plt.cm.Dark2(other_particle_color_idx), width=0.002)
+                if draw:
+                    plt.arrow(planet.x, planet.y, delta_vx*settings.DRAW_TIME_IN_FUTURE_LINE, delta_vy*settings.DRAW_TIME_IN_FUTURE_LINE, color=plt.cm.Dark2(other_planet_color_idx), width=0.002)
             
-            particle.v_y += delta_vy
-            particle.v_x += delta_vx
+            planet.v_y += delta_vy
+            planet.v_x += delta_vx
         
+        if settings.DRAW_PATHES and draw:
+            x_pathes[idx].append(planet.x)
+            y_pathes[idx].append(planet.y)
+            
+                
+        planet.move_planet(delta_seconds)
+
         
-        plt.scatter(particle.x, particle.y, s=particle.size, color=plt.cm.Dark2(color_idx))
-        x_pathes[idx].append(particle.x)
-        y_pathes[idx].append(particle.y)
+
+
+def draw_frame():
+    global min_x, max_x, min_y, max_y
+    global x_pathes, y_pathes
+
+    plt.clf()
+    for idx, planet in enumerate(planets):
+        color_idx = idx/(len(planets)-1)
+        plt.scatter(planet.x, planet.y, s=planet.size, color=plt.cm.Dark2(color_idx))
+        if planet.is_fixed:
+            continue
+
+        
         if settings.DRAW_PATHES:
+            x_pathes[idx] = x_pathes[idx][-settings.MAX_PATH_SIZE:]
+            y_pathes[idx] = y_pathes[idx][-settings.MAX_PATH_SIZE:]
             plt.plot(x_pathes[idx], y_pathes[idx], alpha=0.3, color=plt.cm.Dark2(color_idx))
         if settings.DRAW_DIRECTION_LINE:
-            plt.arrow(particle.x, particle.y, particle.v_x*settings.DRAW_TIME_IN_FUTURE_LINE, particle.v_y*settings.DRAW_TIME_IN_FUTURE_LINE, color=plt.cm.Dark2(color_idx), width=0.005)
-    
+            plt.arrow(planet.x, planet.y, planet.v_x*settings.DRAW_TIME_IN_FUTURE_LINE, planet.v_y*settings.DRAW_TIME_IN_FUTURE_LINE, color=plt.cm.Dark2(color_idx), width=0.005)
 
-        particle.move_particle(delta_seconds)
-        # if settings.DRAW_UNIVERSE_CENTER_OF_MASS:
-        #     plt.scatter(pseudo_particle.x, pseudo_particle.y, marker="2", color=plt.cm.Dark2(color_idx), zorder=99)
-        # if settings.DRAW_LINE_TO_UNIVERSE_CENTER_OF_MASS:
-        #     plt.plot([particle.x, pseudo_particle.x], [particle.y, pseudo_particle.y], color=plt.cm.Dark2(color_idx))
+        if planet.x > max_x:
+            max_x = planet.x
+        elif planet.x < min_x:
+            min_x = planet.x
             
+        if planet.y > max_y:
+            max_y = planet.y
+        elif planet.y < min_y:
+            min_y = planet.y
+            
+    plt.scatter(max_x, max_y, color="#00000000")
+    plt.scatter(min_x, min_y, color="#00000000")
     plt.axis('equal')
     plt.draw()
-    return current_time
 
 def main():
     plt.ion()
     plt.show()
-    t = time.time()
     while True:
-        plt.clf()
-        if len(settings.GRAPH_X_LIMITS) == 2:
-            plt.xlim(settings.GRAPH_X_LIMITS)
-        if len(settings.GRAPH_Y_LIMITS) == 2:
-            plt.ylim(settings.GRAPH_Y_LIMITS)
-        t = iterate(t)
-        plt.pause(0.0001)
+        for i in range(settings.TIME_WARP):
+            if len(settings.GRAPH_X_LIMITS) == 2:
+                plt.xlim(settings.GRAPH_X_LIMITS)
+            if len(settings.GRAPH_Y_LIMITS) == 2:
+                plt.ylim(settings.GRAPH_Y_LIMITS)
+
+            iterate(settings.ANIMATION_FIXED_DELTA_TIME*(i/settings.TIME_WARP), i == settings.TIME_WARP-1)
+        draw_frame()
+        plt.title("{0} -> {1}x".format(preset, settings.TIME_WARP))
+        plt.pause(0.000000001)
         
 
 if __name__ == '__main__':
