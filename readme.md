@@ -14,7 +14,7 @@ This project aims to simulate how orbital mechanics work
     <td>Simple orbit</td>
     <td>Simple orbit with 2 planets</td>
     <td>Orbit with 2 massive objects too close</td>
-    <td>Synchronous orbit of 4 planets</td>
+    <td>Synchronous orbit of 4 planets with different apogee locations</td>
   </tr>
 </table>
 
