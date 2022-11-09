@@ -3,19 +3,20 @@
 This project aims to simulate how orbital mechanics works
 
 ## Examples
-<div style="display: flex;">
-    <img src="./readme_files/simple_orbit.gif" alt="Simple orbit" style="width: 25%"/>
-    <img src="./readme_files/simple_orbit_2.gif" alt="Simple orbit" style="width: 25%"/>
-    <img src="./readme_files/too_close.gif" alt="Simple orbit" style="width: 25%"/>
-    <img src="./readme_files/sync.gif" alt="Simple orbit" style="width: 25%"/>
-</div>
-
-<div style="display: flex;">
-    <div style="width: 25%; text-align: center;"><label>Simple orbit</label></div>
-    <div style="width: 25%; text-align: center;"><label>Simple orbit with 2 planets</label></div>
-    <div style="width: 25%; text-align: center;"><label>Orbit with 2 massive objects too close</label></div>
-    <div style="width: 25%; text-align: center;"><label>Synchronous orbit of 4 planets</label></div>
-</div>
+<table cellspacing="0" cellpadding="0">
+  <tr>
+    <td><img src="./readme_files/simple_orbit.gif" alt="Simple orbit" /></td>
+    <td><img src="./readme_files/simple_orbit_2.gif" alt="Simple orbit with 2 planets"/></td>
+    <td><img src="./readme_files/too_close.gif" alt="Orbit with 2 massive objects too close"/></td>
+    <td><img src="./readme_files/sync.gif" alt="Synchronous orbit of 4 planets"/></td>
+  </tr>
+  <tr>
+    <td>Simple orbit</td>
+    <td>Simple orbit with 2 planets</td>
+    <td>Orbit with 2 massive objects too close</td>
+    <td>Synchronous orbit of 4 planets</td>
+  </tr>
+</table>
 
 ## Measurement Units
 Planet mass: $kg$<br>
