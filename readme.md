@@ -29,7 +29,7 @@ You can configure a set of things in the settings.py file like:
 |FPS|Sets the maximum frame rate of the animation. Lower FPSs will increase performance|Float $0$...$\infty$|
 ### Execution
 ```
-usage: Orbit Simulator [-h] [-mp PATH_SIZE] [-p] [-d] [-tw TIME_WARP]
+usage: orbit_simulator [-h] [-mp PATH_SIZE] [-p] [-d] [-tw TIME_WARP]
                        [-ei EXTRA_ITERATIONS] [-fps FPS]
                        preset
 

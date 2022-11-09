@@ -7,7 +7,7 @@ import math
 import argparse
 
 arg_parser = argparse.ArgumentParser(
-                    prog = 'Orbit Simulator',
+                    prog = 'orbit_simulator',
                     description = 'This project aims to simulate how orbital mechanics works'
                     )
 arg_parser.add_argument('preset', help="Simulation preset name", type=str)   
