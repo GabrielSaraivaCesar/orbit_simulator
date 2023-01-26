@@ -18,9 +18,9 @@ presets_object = {
     ],
 
     "HIGH_INFLUENCES": [
-        Planet(x=100, y=400, mass=10*10**15, size=50, v_x=100),
-        Planet(x=0, y=300, mass=2*10**14, size=50, v_x=100),
-        Planet(x=0, y=0, mass=2*10**17, size=200, is_fixed=True),
+        Planet(x=1000, y=4000, mass=10*10**16, size=50, v_x=100),
+        Planet(x=0, y=3000, mass=2*10**15, size=50, v_x=200),
+        Planet(x=0, y=0, mass=2*10**18, size=200, is_fixed=True),
     ],
 
     "SYNCHRONOUS_ORBITS": [
@@ -31,9 +31,9 @@ presets_object = {
         Planet(x=0, y=0, mass=1*10**17, size=200, is_fixed=True),
     ],
     
-    "SOLAR_SYSTEM": [
-        Planet(x=0, y=152.10*(10**6)*1000, mass=5.972 * 10**24, size=6371/100, v_x=29290, color="#75bd39"), # Earth
-        Planet(x=0, y=0, mass=1.989 * (10**30), size=696340/200, is_fixed=True, color="#fc9300"), # Sun
+    "KERBOL_SYSTEM": [
+        Planet(x=0, y=13_599_840_256, mass=0, size=6371/100, v_x=-9285, color="#75bd39"), # Earth
+        Planet(x=0, y=0, mass=1.7565459*(10**28), size=696340/200, is_fixed=True, color="#fc9300"), # Sun
     ],
 }
 

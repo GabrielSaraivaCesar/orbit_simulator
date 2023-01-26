@@ -9,7 +9,7 @@ TIME_WARP=1
 
 # This defines the amount of divisions you will make per iterations. If 10 => Divide delta time by 10 and iterate 10 times
 # Important to make the calculations right maily with high TIME_WARP values and/or planets getting to close from others
-ITERATIONS_PER_TICK=10
+ITERATIONS_PER_TICK=1
 
 # Defines a maximum frame rate per second. Simulation will not be affected by this value, only rendering
 FPS = 30

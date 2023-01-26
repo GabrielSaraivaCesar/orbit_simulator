@@ -5,6 +5,7 @@ import src.presets as presets
 import settings
 import math
 import argparse
+from datetime import datetime
 
 arg_parser = argparse.ArgumentParser(
                     prog = 'orbit_simulator',
@@ -39,6 +40,7 @@ fig = None
 ax = None
 renderer = None
 angle_3d = 0
+start_time = datetime.now()
 
 def is_3d_projection():
     return projection == '3d'
@@ -156,6 +158,11 @@ def draw_frame():
         ax.scatter(max_x, max_y, color="#00000000")
         ax.scatter(min_x, min_y, color="#00000000")
 
+    execution_time = (datetime.now()-start_time).seconds * settings.TIME_WARP
+    hours, remainder = divmod(execution_time, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    ax.set_title("{0} -> {1}x ({2})".format(preset, settings.TIME_WARP, '{:02}:{:02}:{:02}'.format(int(hours), int(minutes), int(seconds)) ))
+
     plt.axis('equal')
     ax.draw(renderer)
 
@@ -183,7 +190,7 @@ def main():
         if time_to_draw:
             angle_3d += settings.ROTATION_3D_RATE * drawing_delta_t 
             draw_frame()
-        ax.set_title("{0} -> {1}x".format(preset, settings.TIME_WARP))
+            
         plt.pause(0.000000001)
         
 
