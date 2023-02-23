@@ -101,7 +101,7 @@ These are the distances we should substract from the coordinates,resulting into 
 Using these coordinates, the new distance is $d=\sqrt{8.22^2+4.10^2}\approx9.18$
 
 The simulator uses the same trigonometry principles, where the target celestial body position $P_2$ is transformed into the center of the matrix, creating the new matrix $M$. This is achieved by the following formula:
-$ M=-(P_1-P_2)$
+$ M=-(P_1-P_2) $
 
 Also, the simulator uses a 3D matrix to simulate the $Z$ axis. The formulas mentioned above won't change much, all it needs to do is add the $Z$ coordinate to the equations.
 
