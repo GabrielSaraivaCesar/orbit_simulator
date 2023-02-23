@@ -93,7 +93,7 @@ That means the distance from the $[0, 0]$ is $d=\sqrt{10^2+5^2}\approx11.18$.
 
 That also means that  $[10, 5]\over 11.18$ retuns a rotation matrix (with values between -1 and 1) directing precisely the speed distribution ratio we need to use $[0.89, 0.44]$.
 
-At a first look, it might seem weird that this matrix don't sum up to 1. But let's take into consideration that the speed of the celestial body is $2m/s$. After 1 second, the new distance should be $9.18$, right?
+Now, let's take into consideration that the speed of the celestial body is $2m/s$. After 1 second, the new distance should be $9.18$, right?
 
 The approximate distance it should move on each axis is then $[0.89, 0.44] * 2 = [1.78, 0.88]$
 
