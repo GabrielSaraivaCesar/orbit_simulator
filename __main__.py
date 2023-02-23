@@ -5,8 +5,7 @@ import settings
 import time
 import sys
 from src import celestial_body_utils, simulator
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import tkinter as tk
+from src.presets import presets
 
 # Preparing canvas
 projection = "2d"
@@ -26,6 +25,9 @@ sim = simulator.Simulator([
     celestial_body_utils.create_celestial_body(mass=1.989e30,  fixed=True), # sun
     celestial_body_utils.create_celestial_body(mass=5.972e24, x=147e9, vy=30300), # earth
 ])
+
+sim = simulator.Simulator(presets['HIGH_INFLUENCES'])
+
 
 def simulate():
     """
