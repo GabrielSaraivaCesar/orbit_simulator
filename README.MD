@@ -93,17 +93,17 @@ That means the distance from the $[0, 0]$ is $d=\sqrt{10^2+5^2}\approx11.18$.
 
 That also means that  $[10, 5]\over 11.18$ retuns a rotation matrix (with values between -1 and 1) directing precisely the speed distribution ratio we need to use $[0.89, 0.44]$.
 
-Now, let's take into consideration that the speed of the celestial body is $2m/s$. After 1 second, the new distance should be $9.18$, right?
+Now let's take into consideration that the speed of the celestial body is $2m/s$. After 1 second, the new distance should be $9.18$, right?
 
-The approximate distance it should move on each axis is then $[0.89, 0.44] * 2 = [1.78, 0.88]$
+The approximate distance it should move on each axis after 1 second is then $[0.89, 0.44] * 2 = [1.78, 0.88]$
 
-These are the distances we should substract from the coordinates,resulting into new coordinates of $[8.21, 4.10]$.
+These are the distances we should substract from the coordinates, resulting into new coordinates of $[8.21, 4.10]$.
 Using these coordinates, the new distance is $d=\sqrt{8.22^2+4.10^2}\approx9.18$
 
 The simulator uses the same trigonometry principles, where the target celestial body position $P_2$ is transformed into the center of the matrix, creating the new matrix $M$. This is achieved by the following formula:
 $ M=-(P_1-P_2) $
 
-Also, the simulator uses a 3D matrix to simulate the $Z$ axis. The formulas mentioned above won't change much, all it needs to do is add the $Z$ coordinate to the equations.
+Also, the simulator uses a 3D matrix to simulate the $Z$ axis. The formulas mentioned above will not change much. All it needs to do is add the $Z$ coordinate to the equations.
 
 $x=x_1-x_2$<br>
 $y=y_1-y_2$<br>
