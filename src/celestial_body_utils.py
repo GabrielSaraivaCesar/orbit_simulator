@@ -33,7 +33,8 @@ def get_gravity_acceleration(from_body, target_body):
     # Considering a matrix, distance it's the magnitude of the vector
     # If you divide the position vector by the distance to the center point you will be basically getting a vertex direction to the center
     # To make it relative to the center point I did -(from_body['pos']-target_body['pos']), so the target_body is the center
-    f = F * -(from_body['pos']-target_body['pos']) / distance # Attraction force for each axis
-    g = f / from_body['mass'] # Gravity acceleration for each axis
+    g = F / from_body['mass'] # Gravity acceleration for each axis
 
+    # Transforming gravity acceleration into a matrix containing how much each vertex should be accelerated
+    g = g * (-(from_body['pos']-target_body['pos']) / distance)
     return g
