@@ -66,13 +66,11 @@ Speed & Velocity: $m/s$<br><br>
 ## Assumptions and Formulas
 
 ### Gravitational Constant
-This is an aproximate value of $G$ based on Committee on Data for Science and Technology (CODATA)
-
-the article "[CODATA recommended values of the fundamental physical constants: 2018](https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.93.025010)". By Eite Tiesinga, Peter J. Mohr, David B. Newell, and Barry N. Taylor:<br>
+This is an aproximate value of $G$ based on Committee on Data for Science and Technology (CODATA) with the article "[CODATA recommended values of the fundamental physical constants: 2018](https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.93.025010)". By Eite Tiesinga, Peter J. Mohr, David B. Newell, and Barry N. Taylor:<br>
 $G= 6.6743 \times 10^{−11} m^3 kg^{−1} s^{−2}$<br><br>
 
-### Distance between planets
-In a 2d matrix, planets have $x$ and $y$ coordinates. The formula obtains the distance between the axes of the 2 planets by interpreting it as a right triangle, resulting in the value of the hypotenuse, in meters.
+### Distance between celestial bodies
+In a 2d matrix, celestial bodies have $x$ and $y$ coordinates. The formula obtains the distance between the axes of the 2 celestial bodies by interpreting it as a right triangle, resulting in the value of the hypotenuse, in meters.
 
 $\sqrt{|x_1-x_2|^{2}+|y_1-y_2|^{2}}$<br>
 
@@ -81,10 +79,19 @@ And for a 3d matrix, you simply need to add the $z$ axis to the formula
 $\sqrt{|x_1-x_2|^{2}+|y_1-y_2|^{2}+|z_1-z_2|^{2}}$<br><br>
 
 ### Gravitational Acceleration
+To calculate the gravitational acceleration I decided to use Newton's universal gravitational law, since it's simpler and works well for the scenarios addressed by the simulator (Stars, planets, ships and natural or artificial satellites)
+
 $G$ = Gravitational Constant<br>
-$M$ = Mass of the target planet<br>
-$r$ = Distance between the planets<br><br>
-$g = {{G*M} \over r^{2}} $<br><br>
+$M$ = Mass of the celestial bodies<br>
+$r$ = Distance between the celestial bodies<br><br>
+
+$F=G{M_1M_2\over r^2}$<br>
+Using that equation, and considering that $F=g*M$, we can also directly calculate $g$ by the following formula:
+
+$g={G{M_1M_2\over r^2}\over M_2}={G{M_1\cancel{M_2}\over r^2}\over \cancel{M_2}}=G{{M_1} \over r^{2}}={G\over 1}*{M_1\over r^2}$
+
+Therefore,
+$g = {{GM} \over r^{2}} $<br><br>
 
 ### Speed distribution between axes
 Imagine you have a celestial body on the following XY coordinates: $[10, 5]$.
@@ -111,7 +118,7 @@ $z=z_1-z_2$<br><br>
 
 $M_1=[x,y,z]$
 
-$d0=\sqrt{x^2+y^2+z^2}$<br><br>
+$d_0=\sqrt{x^2+y^2+z^2}$<br><br>
 
 $R_0=M_1 \div d_0$
 
