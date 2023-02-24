@@ -1,4 +1,5 @@
 from src import celestial_body_utils
+import numpy as np
 
 class Simulator:
     simulation_history = []
@@ -19,7 +20,8 @@ class Simulator:
             if from_body['fixed'] == True: # Ignore fixed bodies
                 self.simulation_history[body_i].append(from_body['pos'].copy())
                 continue
-
+            
+            summed_delta_v = np.array([0, 0, 0])
             for body_j, target_body in enumerate(self.celestial_bodies):
 
                 if body_i == body_j: # If it's the same body, skip
@@ -27,6 +29,9 @@ class Simulator:
 
                 g = celestial_body_utils.get_gravity_acceleration(from_body, target_body) # get gravity acceleration to target body
                 
-                from_body['V'] += g * delta_time # Update velocity for each axis based on delta time
-                from_body['pos'] += from_body['V'] * delta_time  # Update position for each axis based on delta time
+                summed_delta_v = summed_delta_v + g
+
+            from_body['V'] += summed_delta_v * delta_time # Update velocity for each axis based on delta time
+            from_body['pos'] += from_body['V'] * delta_time  # Update position for each axis based on delta time
+
             self.simulation_history[body_i].append(from_body['pos'].copy())
