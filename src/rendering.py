@@ -42,7 +42,7 @@ def animate_simulation(sim:simulator.Simulator, ax:plt.Axes, projection='2d'):
 
                 ax.plot(hist[:,0],hist[:,1],hist[:,2], color=body['color'])
                 ax.scatter(hist[-1][0], hist[-1][1], hist[-1][2], color=body['color'])
-                if settings.SHOW_COORDS:
+                if settings.SHOW_COORDS and body['fixed'] is False:
                     ax.text(
                         hist[-1][0] + (xsize*offset),
                         hist[-1][1] + (ysize*offset),
@@ -54,7 +54,7 @@ def animate_simulation(sim:simulator.Simulator, ax:plt.Axes, projection='2d'):
             else:
                 ax.plot(hist[:,0],hist[:,1], color=body['color'])
                 ax.scatter(hist[-1][0], hist[-1][1], color=body['color'])
-                if settings.SHOW_COORDS:
+                if settings.SHOW_COORDS and body['fixed'] is False:
                     ax.text(
                         hist[-1][0] + (xsize*offset),
                         hist[-1][1] + (ysize*offset),

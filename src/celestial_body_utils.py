@@ -40,6 +40,7 @@ def get_gravity_acceleration(from_body, target_body):
 
     # Transforming gravity acceleration into a matrix containing how much each vertex should be accelerated
     g = g * (-(from_body['pos']-target_body['pos']) / distance)
-
-    
     return g
+
+def km_to_m(km):
+    return km*1000
