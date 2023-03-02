@@ -2,13 +2,13 @@ import numpy as np
 import settings
 import time
 import sys
-from src import celestial_body_utils, simulator, rendering, constants
+from src import simulator, rendering
 from src.presets import presets
 import math
 
 
-ax, fig, projection = rendering.set_up_mpl()
-sim = simulator.Simulator(presets['SOLAR_SYSTEM'])
+ax, fig = rendering.set_up_mpl()
+sim = simulator.Simulator(presets['HIGH_INFLUENCES'])
 
 coordinate_shower_position = None
 
@@ -33,5 +33,5 @@ def on_close(_):
 if __name__ == '__main__':
     fig.canvas.mpl_connect('close_event', on_close)    
     simulate()
-    rendering.animate_simulation(sim, ax, projection=projection)
+    rendering.animate_simulation(sim, ax)
     

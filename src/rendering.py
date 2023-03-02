@@ -6,62 +6,54 @@ import time
 import numpy as np
 import math
 
-def animate_simulation(sim:simulator.Simulator, ax:plt.Axes, projection='2d'):
-    anim_t = time.time()
-    curr_frame_idx = 0
+def animate_simulation(sim:simulator.Simulator, ax:plt.Axes):
     """
         This function will animate a simulation based on the animation_history
     """
-
+    # Initialize animation variables
+    anim_t = time.time()
+    curr_frame_idx = 0
 
     def draw_simulator_frame(sim:simulator.Simulator, frame_idx:int, ax: plt.Axes):
         """
             Responsible for rendering a single frame of the animation
         """
 
-        xl, xr = ax.get_xlim()
-        yl, yr = ax.get_ylim()
-        xsize = xr-xl
-        ysize = yr-yl
-        offset = 0.02
-        zl = 0
-        zr = 0
-        zsize = 0
-        
-        if projection == '3d':
-            zl, zr = ax.get_zlim()
-            zsize = zr-zl
+        x_left, x_right = ax.get_xlim()
+        x_size = x_right-x_left
+
+        y_left, y_right = ax.get_ylim()
+        y_size = y_right-y_left
+
+        text_pos_offset = 0.02
+
+        z_left, z_right = ax.get_zlim() if settings.IS_3D else (0, 0)
+        z_size = z_right-z_left
 
         for body_i, body in enumerate(sim.celestial_bodies):
             hist = np.array(sim.simulation_history[body_i][:frame_idx+1])
-
-
-            if projection == '3d':
-                zl, zr = ax.get_zlim()
-                zsize = zr-zl
-
-                ax.plot(hist[:,0],hist[:,1],hist[:,2], color=body['color'])
-                ax.scatter(hist[-1][0], hist[-1][1], hist[-1][2], color=body['color'])
-                if settings.SHOW_COORDS and body['fixed'] is False:
-                    ax.text(
-                        hist[-1][0] + (xsize*offset),
-                        hist[-1][1] + (ysize*offset),
-                        hist[-1][2] + (zsize*offset),
-                        "[{:.2E}, {:.2E}, {:.2E}]".format(hist[-1][0], hist[-1][1], hist[-1][2]),
-                        verticalalignment="bottom",
-                        horizontalalignment="left"
-                    )
+            
+            plot_coords = np.array(hist[:,0],hist[:,1],hist[:,2]) if settings.IS_3D else np.array([hist[:,0],hist[:,1]])
+            text_coords = (np.array(hist[:,0] + (x_size*text_pos_offset),
+                                   hist[:,1] + (y_size*text_pos_offset),
+                                   hist[:,2] + (z_size*text_pos_offset)) 
+                            if settings.IS_3D else 
+                            np.array([hist[:,0] + (x_size*text_pos_offset),  hist[:,1] + (y_size*text_pos_offset)]))[:,-1]
+            
+            ax.plot(*plot_coords, color=body.color)
+            if body.radius is None:
+                ax.scatter(*(plot_coords[:,-1]), color=body.color)
             else:
-                ax.plot(hist[:,0],hist[:,1], color=body['color'])
-                ax.scatter(hist[-1][0], hist[-1][1], color=body['color'])
-                if settings.SHOW_COORDS and body['fixed'] is False:
-                    ax.text(
-                        hist[-1][0] + (xsize*offset),
-                        hist[-1][1] + (ysize*offset),
-                        "[{:.2E}, {:.2E}]".format(hist[-1][0], hist[-1][1]),
-                        verticalalignment="bottom",
-                        horizontalalignment="left"
-                    )
+                circle = plt.Circle((plot_coords[:,-1]), body.radius, color=body.color)
+                ax.add_patch(circle)
+
+            if settings.SHOW_COORDS and body.fixed is False:
+                ax.text(
+                    *text_coords,
+                    "[{:.2E}, {:.2E}, {:.2E}]".format(plot_coords[0][-1], plot_coords[1][-1], plot_coords[2][-1]) if settings.IS_3D else "[{:.2E}, {:.2E}]".format(plot_coords[0][-1], plot_coords[1][-1]),
+                    verticalalignment="bottom",
+                    horizontalalignment="left"
+                )
                 
 
     def uptate_execution_time_text(frame_index):
@@ -103,19 +95,12 @@ def animate_simulation(sim:simulator.Simulator, ax:plt.Axes, projection='2d'):
 
 
 def set_up_mpl():
-    # Preparing canv as
-    projection = "2d"
-    if settings.IS_3D:
-        projection = "3d"
+    # Preparing canvas
     mpl.rcParams['toolbar'] = 'None'
 
     fig = plt.figure()
     fig.canvas.draw()
 
-    ax = None
-    if projection == '3d':
-        ax = fig.add_subplot(projection='3d')
-    else: 
-        ax = fig.add_subplot()
+    ax = fig.add_subplot(projection='3d') if settings.IS_3D else fig.add_subplot()
 
-    return (ax, fig, projection)
+    return (ax, fig)
