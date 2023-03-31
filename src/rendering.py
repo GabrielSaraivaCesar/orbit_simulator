@@ -1,4 +1,4 @@
-from src import simulator
+from src import simulator, celestial_body_utils
 import settings
 import matplotlib.pyplot as plt 
 import matplotlib as mpl
@@ -30,13 +30,44 @@ def animate_simulation(sim:simulator.Simulator, ax:plt.Axes):
         z_left, z_right = ax.get_zlim() if settings.IS_3D else (0, 0)
         z_size = z_right-z_left
 
+
+        for tracer in sim.distance_tracers:
+            t_0_pos = sim.simulation_history[tracer[0]][frame_idx+1]
+            t_1_pos = sim.simulation_history[tracer[1]][frame_idx+1]
+            dist = math.sqrt(
+                    np.sum(
+                        np.power(
+                            t_0_pos - t_1_pos, 
+                            2
+                        )
+                    )
+                )
+
+            if settings.IS_3D:
+                ax.plot([t_0_pos[0], t_1_pos[0]], [t_0_pos[1], t_1_pos[1]], [t_0_pos[2], t_1_pos[2]], '--', alpha=0.2, color="black")
+                ax.text(
+                    (t_0_pos[0] + t_1_pos[0]) / 2,
+                    (t_0_pos[1] + t_1_pos[1]) / 2,
+                    (t_0_pos[2] + t_1_pos[2]) / 2,
+                    "{:.2E}m".format(dist)
+                )
+            else:
+                ax.plot([t_0_pos[0], t_1_pos[0]], [t_0_pos[1], t_1_pos[1]], '--', alpha=0.2, color="black")
+                ax.text(
+                    (t_0_pos[0] + t_1_pos[0]) / 2,
+                    (t_0_pos[1] + t_1_pos[1]) / 2,
+                    "{:.2E}m".format(dist)
+                )
+
+
+
         for body_i, body in enumerate(sim.celestial_bodies):
             hist = np.array(sim.simulation_history[body_i][:frame_idx+1])
             
-            plot_coords = np.array(hist[:,0],hist[:,1],hist[:,2]) if settings.IS_3D else np.array([hist[:,0],hist[:,1]])
-            text_coords = (np.array(hist[:,0] + (x_size*text_pos_offset),
+            plot_coords = np.array([hist[:,0],hist[:,1],hist[:,2]]) if settings.IS_3D else np.array([hist[:,0],hist[:,1]])
+            text_coords = (np.array([hist[:,0] + (x_size*text_pos_offset),
                                    hist[:,1] + (y_size*text_pos_offset),
-                                   hist[:,2] + (z_size*text_pos_offset)) 
+                                   hist[:,2] + (z_size*text_pos_offset)]) 
                             if settings.IS_3D else 
                             np.array([hist[:,0] + (x_size*text_pos_offset),  hist[:,1] + (y_size*text_pos_offset)]))[:,-1]
             
@@ -46,6 +77,7 @@ def animate_simulation(sim:simulator.Simulator, ax:plt.Axes):
             else:
                 circle = plt.Circle((plot_coords[:,-1]), body.radius, color=body.color)
                 ax.add_patch(circle)
+
 
             if settings.SHOW_COORDS and body.fixed is False:
                 ax.text(
@@ -73,13 +105,13 @@ def animate_simulation(sim:simulator.Simulator, ax:plt.Axes):
                 days_text += 'day '
 
         # This will show the elapsed time of the simulation (considering time warp)
-        ax.set_title("{0}x ({1})".format(settings.FRAME_TIME, '{days_text}{:02}:{:02}:{:02}'.format(int(hours), int(minutes), int(seconds), days_text=days_text), ))
+        ax.set_title("{0}x ({1})".format(sim.frame_time, '{days_text}{:02}:{:02}:{:02}'.format(int(hours), int(minutes), int(seconds), days_text=days_text), ))
 
     
     while True:
         anim_dt = time.time() - anim_t
 
-        curr_frame_idx = math.ceil(anim_dt/(1/settings.FPS))
+        curr_frame_idx = math.ceil(anim_dt/(1/sim.fps))
 
         if curr_frame_idx > len(sim.simulation_history[0])-1:
             anim_t = time.time()

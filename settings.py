@@ -1,9 +1,9 @@
 from src import constants
 
-FPS = 50
-RUN_TIME = constants.SECONDS_IN_ONE_YEAR*4
-FRAME_TIME = constants.SECONDS_IN_ONE_DAY
+FPS = 30000
+RUN_TIME = constants.SECONDS_IN_ONE_HOUR*24
+FRAME_TIME = 0.1
 
-IS_3D = False
-SHOW_COORDS = True
+IS_3D = True
+SHOW_COORDS = False
 

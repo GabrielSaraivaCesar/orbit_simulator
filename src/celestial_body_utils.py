@@ -1,6 +1,5 @@
 import math
 import numpy as np
-import time
 from src import constants
 
 class CelestialBody():
