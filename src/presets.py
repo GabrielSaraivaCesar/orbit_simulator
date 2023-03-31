@@ -12,10 +12,13 @@ class SimulationPreset():
 
 presets = {
     'SIMPLE_ORBIT': SimulationPreset(
+        run_time=constants.SECONDS_IN_ONE_YEAR*10,
+        frame_time=constants.SECONDS_IN_ONE_DAY,
+        fps=30,
         bodies=[
             celestial_body_utils.CelestialBody(mass=1.989e30,  fixed=True, name='Sun', color='orange'),
             celestial_body_utils.CelestialBody(mass=5.9722e24, x=1.470e11, vy=30.29e3, name='Earth', color='green'),
-        ]
+        ],
     ),
 
     'SOLAR_SYSTEM': SimulationPreset(
@@ -33,6 +36,9 @@ presets = {
     ),
 
     'SYNCHRONOUS_ORBITS': SimulationPreset(
+        run_time=constants.SECONDS_IN_ONE_YEAR*10,
+        frame_time=constants.SECONDS_IN_ONE_DAY,
+        fps=30,
         bodies=[
             celestial_body_utils.CelestialBody(y=147e9, vx=30300/2),
             celestial_body_utils.CelestialBody(y=-147e9, vx=-30300/2),
@@ -43,7 +49,7 @@ presets = {
     ),
     
 
-    'SYNCHRONOUS_ORBITS_2': SimulationPreset(
+    'GEOSTATIONARY': SimulationPreset(
         run_time=constants.SECONDS_IN_ONE_DAY,
         frame_time=1,
         fps=5000,
@@ -55,11 +61,26 @@ presets = {
     ),
 
     'HIGH_INFLUENCES': SimulationPreset(
+        run_time=constants.SECONDS_IN_ONE_YEAR*10,
+        frame_time=constants.SECONDS_IN_ONE_DAY/2,
+        fps=70,
         bodies=[
             celestial_body_utils.CelestialBody(x=0, y=147e9/2, mass=1.989e28, vx=30300/2),
             
-            celestial_body_utils.CelestialBody(x=0, y=147e9/4, mass=1.989e28/2, vx=30300),
+            celestial_body_utils.CelestialBody(x=-147e9/3.5, y=147e9/3, mass=1.989e28, vx=30300/2),
             celestial_body_utils.CelestialBody(mass=1.989e30/2, fixed=True),
+        ]
+    ),
+
+    '3D_SAMPLE': SimulationPreset(
+        run_time=constants.SECONDS_IN_ONE_YEAR,
+        frame_time=constants.SECONDS_IN_ONE_DAY/100,
+        fps=3000,
+        bodies=[
+            celestial_body_utils.CelestialBody(y=147e9, vx=30300/2),
+            celestial_body_utils.CelestialBody(z=-147e9, vx=-30300/2),
+            celestial_body_utils.CelestialBody(x=147e9, vy=-30300/2),
+            celestial_body_utils.CelestialBody(mass=1.989e30, fixed=True),
         ]
     ),
 }

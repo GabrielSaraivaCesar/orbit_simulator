@@ -4,6 +4,8 @@ import sys
 from src import simulator, rendering
 from src.presets import presets
 import math
+import settings
+
 
 
 ax, fig = rendering.set_up_mpl()
@@ -30,6 +32,19 @@ def on_close(_):
     sys.exit()
 
 if __name__ == '__main__':
+    if not settings.args['preset_name'].upper() in presets:
+        preset_list_str = ""
+        for preset_key in presets.keys():
+            preset_list_str += "{0}\n".format(preset_key)
+
+        print("Preset \"{0}\" doesn't exist, available presets: \n{1}".format(settings.args['preset_name'], preset_list_str ))
+
+
+
+        exit()
+
+    sim = simulator.Simulator(presets[settings.args['preset_name'].upper()])
+
     fig.canvas.mpl_connect('close_event', on_close)    
     simulate()
     rendering.animate_simulation(sim, ax)

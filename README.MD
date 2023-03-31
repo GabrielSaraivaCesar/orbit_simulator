@@ -5,22 +5,22 @@ This project aims to simulate how orbital mechanics work
 ## Examples
 <table cellspacing="0" cellpadding="0">
   <tr>
-    <td><img src="./readme_files/simple_orbit.gif" alt="Simple orbit" /></td>
-    <td><img src="./readme_files/simple_orbit_2.gif" alt="Simple orbit with 2 planets"/></td>
-    <td><img src="./readme_files/too_close.gif" alt="Orbit with 2 massive objects too close"/></td>
-    <td><img src="./readme_files/sync.gif" alt="Synchronous orbit of 4 planets"/></td>
+    <td><img src="./readme_files/simple_orbit.gif" alt="Earth around the Sun" /></td>
+    <td><img src="./readme_files/solar_sys.gif" alt="Mercury, Venus, Earth and Mars orbiting the Sun"/></td>
+    <td><img src="./readme_files/geostationary.gif" alt="Geostationary orbit around earth"/></td>
+    <td><img src="./readme_files/chaos.gif" alt="Two Massive objects orbiting a fixed point"/></td>
   </tr>
   <tr>
-    <td>Simple orbit</td>
-    <td>Simple orbit with 2 planets</td>
-    <td>Orbit with 2 massive objects too close</td>
-    <td>Synchronous orbit of 4 planets with different apogee locations</td>
+    <td>Earth around the Sun</td>
+    <td>Mercury, Venus, Earth and Mars orbiting the Sun</td>
+    <td>Geostationary orbit around earth</td>
+    <td>Two Massive objects orbiting a fixed point</td>
   </tr>
   
 </table><br><br>
 <table cellspacing="0" cellpadding="0">
   <tr>
-    <td ><img src="./readme_files/3d.gif" alt="Simple orbit" /></td>
+    <td ><img src="./readme_files/3d_sample.gif" alt="Simple orbit" /></td>
   </tr>
   <tr>
     <td>3D animation of 3 planets in orbit</td>
@@ -29,33 +29,21 @@ This project aims to simulate how orbital mechanics work
 
 ## Execution
 ```
-usage: orbit_simulator [-h] [-mp PATH_SIZE] [-p] [-d] [-tw TIME_WARP]
-                       [-ei EXTRA_ITERATIONS] [-fps FPS] [-3d]
-                       {SIMPLE_ORBIT,SIMPLE_ORBIT_2,SIMPLE_ORBIT_3,HIGH_INFLUENCES,SYNCHRONOUS_ORBITS,SOLAR_SYSTEM}
+usage: orbit_simulator [-h] [-3d] [-c] preset_name
 
 positional arguments:
-  {SIMPLE_ORBIT,SIMPLE_ORBIT_2,SIMPLE_ORBIT_3,HIGH_INFLUENCES,SYNCHRONOUS_ORBITS,SOLAR_SYSTEM}
-                        Simulation preset name
+  preset_name
 
 options:
-  -h, --help            show this help message and exit
-  -mp PATH_SIZE, --path-size PATH_SIZE
-                        Maximum amount of path coordinates
-  -p, --no-pathes       Disable path drawing
-  -d, --direction       Allow direction drawing
-  -tw TIME_WARP, --time-warp TIME_WARP
-                        Sets time warp
-  -ei EXTRA_ITERATIONS, --extra-iterations EXTRA_ITERATIONS
-                        Extra interaction per loop. Increases precision.
-                        Decreases performance
-  -fps FPS, --fps FPS   Sets the frame rate. Decreases performance
-  -3d, --3d             Force 3d rendering
+  -h, --help    show this help message and exit
+  -3d, --3d
+  -c, --coords
 
 ```
 ### Execution Command Example
-Run preset ```SYNCHRONOUS_ORBITS``` at 3x time warp, 60 FPS, and force 3d rendering
+Run preset ```SOLAR_SYSTEM``` with 3d rendering
 ```
-python3 orbit_simulator synchronous_orbits -tw 3 -fps 60 -3d
+python3 orbit_simulator solar_system -3d
 ```
 
 ## Measurement Units
