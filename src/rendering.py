@@ -105,7 +105,7 @@ def animate_simulation(sim:simulator.Simulator, ax:plt.Axes):
                 days_text += 'day '
 
         # This will show the elapsed time of the simulation (considering time warp)
-        ax.set_title("{0}x ({1})".format(sim.frame_time, '{days_text}{:02}:{:02}:{:02}'.format(int(hours), int(minutes), int(seconds), days_text=days_text), ))
+        ax.set_title("{0}x ({1})".format(sim.frame_time * sim.fps, '{days_text}{:02}:{:02}:{:02}'.format(int(hours), int(minutes), int(seconds), days_text=days_text), ))
 
     
     while True:

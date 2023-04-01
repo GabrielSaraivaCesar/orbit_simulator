@@ -13,18 +13,19 @@ class SimulationPreset():
 presets = {
     'SIMPLE_ORBIT': SimulationPreset(
         run_time=constants.SECONDS_IN_ONE_YEAR*10,
-        frame_time=constants.SECONDS_IN_ONE_DAY,
-        fps=30,
+        frame_time=constants.SECONDS_IN_ONE_DAY/5,
+        fps=60,
         bodies=[
             celestial_body_utils.CelestialBody(mass=1.989e30,  fixed=True, name='Sun', color='orange'),
             celestial_body_utils.CelestialBody(mass=5.9722e24, x=1.470e11, vy=30.29e3, name='Earth', color='green'),
         ],
+        distance_tracers=[[0,1]]
     ),
 
     'SOLAR_SYSTEM': SimulationPreset(
         run_time=constants.SECONDS_IN_ONE_YEAR*10,
-        frame_time=constants.SECONDS_IN_ONE_DAY,
-        fps=30,
+        frame_time=constants.SECONDS_IN_ONE_DAY/10,
+        fps=300,
         bodies=[
             celestial_body_utils.CelestialBody(mass=1.989e30,  fixed=True, name='Sun', color='orange'),
             celestial_body_utils.CelestialBody(mass=0.33e24, x=46.00e9, vy=58.98e3, name='Mercury'),
@@ -47,7 +48,6 @@ presets = {
             celestial_body_utils.CelestialBody(mass=1.989e30, fixed=True),
         ]
     ),
-    
 
     'GEOSTATIONARY': SimulationPreset(
         run_time=constants.SECONDS_IN_ONE_DAY,
