@@ -8,7 +8,7 @@ import math
 class Simulator:
 
     def __init__(self, preset:SimulationPreset):
-        self.celestial_bodies:list[celestial_body_utils.CelestialBody] = preset.bodies
+        self.celestial_bodies = preset.bodies
         self.simulation_history = [[] for _ in preset.bodies]
         self.simulation_time_tickers = []
         self.run_time = preset.run_time
@@ -51,4 +51,6 @@ def simulate(simulator:Simulator):
             print("Generating simulation [{0}/{1}] ({2}%)".format(idx, len(t), int(idx/len(t)*100)), end='\r')
 
     print("Generating simulation [{0}/{0}] (100%)".format(len(t)))
-    print("Simulation generated in {0:.2f}s".format(time.time() - sim_time))
+    execution_time = time.time() - sim_time
+    print("Simulation generated in {0:.2f}s".format(execution_time))
+    return execution_time

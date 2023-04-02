@@ -29,6 +29,6 @@ if __name__ == '__main__':
     renderer = rendering.SimulationRenderer(sim, ax)
 
     fig.canvas.mpl_connect('close_event', on_close)    
-    simulator.simulate()
+    simulator.simulate(sim)
     renderer.animate_simulation()
     

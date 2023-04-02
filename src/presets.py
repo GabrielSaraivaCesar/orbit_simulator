@@ -4,7 +4,7 @@ from src import constants
 
 
 class SimulationPreset():
-    def __init__(self, bodies=[], run_time=settings.RUN_TIME, frame_time=settings.FRAME_TIME, fps=settings.FPS, distance_tracers=[]):
+    def __init__(self, bodies:list[celestial_body_utils.CelestialBody]=[], run_time=settings.RUN_TIME, frame_time=settings.FRAME_TIME, fps=settings.FPS, distance_tracers=[]):
         self.bodies=bodies
         self.run_time=run_time
         self.frame_time=frame_time
