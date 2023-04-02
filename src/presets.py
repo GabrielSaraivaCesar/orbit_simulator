@@ -52,7 +52,7 @@ presets = {
     'GEOSTATIONARY': SimulationPreset(
         run_time=constants.SECONDS_IN_ONE_DAY,
         frame_time=1,
-        fps=5000,
+        fps=1000,
         bodies=[
             celestial_body_utils.CelestialBody(y=42_164_000, vx=3074.6),
             celestial_body_utils.CelestialBody(mass=5.9722e24, x=0, vy=0, fixed=True, name='Earth', color='green'),

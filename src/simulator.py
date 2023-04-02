@@ -5,7 +5,7 @@ from src.presets import SimulationPreset
 class Simulator:
 
     def __init__(self, preset:SimulationPreset):
-        self.celestial_bodies = preset.bodies
+        self.celestial_bodies:list[celestial_body_utils.CelestialBody] = preset.bodies
         self.simulation_history = [[] for _ in preset.bodies]
         self.simulation_time_tickers = []
         self.run_time = preset.run_time

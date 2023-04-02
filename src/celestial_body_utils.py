@@ -12,6 +12,17 @@ class CelestialBody():
         self.name=name
         self.color=color
 
+def get_celestial_body_speed(b:CelestialBody):
+    # Getting distance from body to 0 point after acelerating for 1 second
+    return math.sqrt(
+        np.sum(
+            np.power(
+                b.V, 
+                2
+            )
+        )
+    )
+
 def get_distance_from_bodies(b1:CelestialBody, b2:CelestialBody):
     # This will do: 
     # sqrt((x1-x2)² + (y1-y2)² + (z1-z2)²)

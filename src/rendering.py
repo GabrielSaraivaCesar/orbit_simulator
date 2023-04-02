@@ -72,17 +72,24 @@ def animate_simulation(sim:simulator.Simulator, ax:plt.Axes):
                             np.array([hist[:,0] + (x_size*text_pos_offset),  hist[:,1] + (y_size*text_pos_offset)]))[:,-1]
             
             ax.plot(*plot_coords, color=body.color)
+            
             if body.radius is None:
                 ax.scatter(*(plot_coords[:,-1]), color=body.color)
             else:
                 circle = plt.Circle((plot_coords[:,-1]), body.radius, color=body.color)
                 ax.add_patch(circle)
 
-
-            if settings.SHOW_COORDS and body.fixed is False:
+            if settings.SHOW_COORDS and not settings.SHOW_SPEED and body.fixed is False:
                 ax.text(
                     *text_coords,
                     "[{:.2E}, {:.2E}, {:.2E}]".format(plot_coords[0][-1], plot_coords[1][-1], plot_coords[2][-1]) if settings.IS_3D else "[{:.2E}, {:.2E}]".format(plot_coords[0][-1], plot_coords[1][-1]),
+                    verticalalignment="bottom",
+                    horizontalalignment="left"
+                )
+            elif not settings.SHOW_COORDS and settings.SHOW_SPEED and body.fixed is False:
+                ax.text(
+                    *text_coords,
+                    "{:.2f}m/s".format(celestial_body_utils.get_celestial_body_speed(body)),
                     verticalalignment="bottom",
                     horizontalalignment="left"
                 )
