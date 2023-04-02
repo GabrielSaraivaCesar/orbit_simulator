@@ -2,6 +2,7 @@ from src import celestial_body_utils
 import settings
 from src import constants
 
+
 class SimulationPreset():
     def __init__(self, bodies=[], run_time=settings.RUN_TIME, frame_time=settings.FRAME_TIME, fps=settings.FPS, distance_tracers=[]):
         self.bodies=bodies
@@ -9,6 +10,7 @@ class SimulationPreset():
         self.frame_time=frame_time
         self.fps=fps
         self.distance_tracers=distance_tracers
+
 
 presets = {
     'SIMPLE_ORBIT': SimulationPreset(

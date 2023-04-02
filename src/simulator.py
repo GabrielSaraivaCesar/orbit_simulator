@@ -1,6 +1,9 @@
 from src import celestial_body_utils
 import numpy as np
 from src.presets import SimulationPreset
+import time
+import math
+
 
 class Simulator:
 
@@ -33,3 +36,19 @@ class Simulator:
             c_body.V += summed_delta_v * self.frame_time # Update velocity for each axis based on delta time
             c_body.pos += c_body.V * self.frame_time  # Update position for each axis based on velocity
             self.simulation_history[body_i].append(c_body.pos.copy())
+
+
+def simulate(simulator:Simulator):
+    """
+        This function will generate the animation and store it into Simulator.simulation_history
+    """
+    sim_time = time.time()
+    t = np.arange(0.0, simulator.run_time, simulator.frame_time) # This will generate time tickers
+    print("Generating simulation [0/{0}] (0%)".format(len(t)), end='\r')
+    for idx, _ in enumerate(t):
+        simulator.update_frame()
+        if idx % math.ceil(len(t)/100) == 0:
+            print("Generating simulation [{0}/{1}] ({2}%)".format(idx, len(t), int(idx/len(t)*100)), end='\r')
+
+    print("Generating simulation [{0}/{0}] (100%)".format(len(t)))
+    print("Simulation generated in {0:.2f}s".format(time.time() - sim_time))

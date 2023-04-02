@@ -12,6 +12,7 @@ class CelestialBody():
         self.name=name
         self.color=color
 
+
 def get_celestial_body_speed(b:CelestialBody):
     # Getting distance from body to 0 point after acelerating for 1 second
     return math.sqrt(
@@ -22,6 +23,7 @@ def get_celestial_body_speed(b:CelestialBody):
             )
         )
     )
+
 
 def get_distance_from_bodies(b1:CelestialBody, b2:CelestialBody):
     # This will do: 
@@ -36,6 +38,7 @@ def get_distance_from_bodies(b1:CelestialBody, b2:CelestialBody):
         )
     )
     return distance
+
 
 def get_gravity_acceleration(from_body:CelestialBody, target_body:CelestialBody):
     distance = get_distance_from_bodies(from_body, target_body) # Distance between center of masses
